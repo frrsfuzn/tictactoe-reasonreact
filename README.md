@@ -6,8 +6,6 @@ It's a great tutorial to start understanding how react works and outputing a gre
 
 ```sh
 npm install
-npm run server
-# in a new tab
 npm start
 ```
 
