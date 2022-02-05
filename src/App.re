@@ -44,7 +44,6 @@ let make = () => {
     <Square value={Array.get(squares, i)} onClick={() => handleClick(i)} />;
   };
   let winner = calculateWinner(squares);
-  Js.log(winner == " ");
   let status =
     winner == " " ? "Next Player: " ++ player : "Winner: " ++ winner;
   <>

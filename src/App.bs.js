@@ -100,7 +100,6 @@ function App(Props) {
               });
   };
   var winner = calculateWinner(squares);
-  console.log(winner === " ");
   var status = winner === " " ? "Next Player: " + player : "Winner: " + winner;
   return React.createElement(React.Fragment, undefined, React.createElement("p", undefined, status), React.createElement("div", {
                   className: "board-row"
