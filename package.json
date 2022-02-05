@@ -1,0 +1,29 @@
+{
+  "name": "tictactoe-reason",
+  "version": "0.1.0",
+  "scripts": {
+    "build:project": "bsb -make-world",
+    "start:project": "bsb -make-world -w -ws _ ",
+    "clean": "bsb -clean-world",
+    "server": "moduleserve ./ --port 8000",
+    "start" : "concurrently 'npm run start:project' 'npm run server'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "BuckleScript",
+    "ReasonReact",
+    "reason-react"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^7.0.0",
+    "react": "^16.8.1",
+    "react-dom": "^16.8.1",
+    "reason-react": ">=0.7.1"
+  },
+  "devDependencies": {
+    "bs-platform": "^9.0.2",
+    "moduleserve": "^0.9.0"
+  }
+}
