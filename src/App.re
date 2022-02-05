@@ -1,10 +1,12 @@
 [@react.component]
 let make = () => {
   let (squares, setSquares) = React.useState(_ => Array.make(9, ""))
+  let (player, setPlayer) = React.useState(_ => "X");
   let handleClick = (i) => {
     let newSquares = Array.copy(squares)
-    newSquares[i] = "X";
+    newSquares[i] = player;
     setSquares(_ => newSquares);
+    setPlayer(prev => prev === "X" ? "O" : "X");
   }
 
   let renderSquare = (i) => {
@@ -27,4 +29,4 @@ let make = () => {
       {renderSquare(8)}
     </div>
   </>
-}
+};

@@ -12,14 +12,26 @@ function App(Props) {
       });
   var setSquares = match[1];
   var squares = match[0];
+  var match$1 = React.useState(function () {
+        return "X";
+      });
+  var setPlayer = match$1[1];
+  var player = match$1[0];
   var renderSquare = function (i) {
     return React.createElement(Square$TictactoeReason.make, {
                 value: Caml_array.get(squares, i),
                 onClick: (function (param) {
                     var newSquares = $$Array.copy(squares);
-                    Caml_array.set(newSquares, i, "X");
-                    return Curry._1(setSquares, (function (param) {
-                                  return newSquares;
+                    Caml_array.set(newSquares, i, player);
+                    Curry._1(setSquares, (function (param) {
+                            return newSquares;
+                          }));
+                    return Curry._1(setPlayer, (function (prev) {
+                                  if (prev === "X") {
+                                    return "O";
+                                  } else {
+                                    return "X";
+                                  }
                                 }));
                   })
               });
