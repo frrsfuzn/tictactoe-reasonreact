@@ -1,4 +1,4 @@
 switch(ReactDOM.querySelector("#root")) {
-  | Some(root) => ReactDOM.render(<Greeting name="Fauzan"/>, root)
+  | Some(root) => ReactDOM.render(<App/>, root)
   | None => ()
 }

@@ -2,14 +2,12 @@
 
 var React = require("react");
 var ReactDom = require("react-dom");
-var Greeting$TictactoeReason = require("./Greeting.bs.js");
+var App$TictactoeReason = require("./App.bs.js");
 
 var root = document.querySelector("#root");
 
 if (!(root == null)) {
-  ReactDom.render(React.createElement(Greeting$TictactoeReason.make, {
-            name: "Fauzan"
-          }), root);
+  ReactDom.render(React.createElement(App$TictactoeReason.make, {}), root);
 }
 
 /* root Not a pure module */
