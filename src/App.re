@@ -33,7 +33,7 @@ let make = () => {
   let (squares, setSquares) = React.useState(_ => Array.make(9, " "));
   let (player, setPlayer) = React.useState(_ => "X");
   let handleClick = i =>
-    if (calculateWinner(squares) === " ") {
+    if (calculateWinner(squares) === " " && squares[i] === " ") {
       let newSquares = Array.copy(squares);
       newSquares[i] = player;
       setSquares(_ => newSquares);

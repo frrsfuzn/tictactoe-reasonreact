@@ -81,7 +81,7 @@ function App(Props) {
     return React.createElement(Square$TictactoeReason.make, {
                 value: Caml_array.get(squares, i),
                 onClick: (function (param) {
-                    if (calculateWinner(squares) !== " ") {
+                    if (!(calculateWinner(squares) === " " && Caml_array.get(squares, i) === " ")) {
                       return ;
                     }
                     var newSquares = $$Array.copy(squares);
