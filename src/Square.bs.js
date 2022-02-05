@@ -3,7 +3,9 @@
 var React = require("react");
 
 function Square(Props) {
-  return React.createElement("button", undefined);
+  return React.createElement("button", {
+              className: "square"
+            }, "X");
 }
 
 var make = Square;

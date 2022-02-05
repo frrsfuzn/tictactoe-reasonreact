@@ -1,5 +1,6 @@
 [@react.component]
 
 let make = () => 
-    <button>
+    <button className="square">
+        {ReasonReact.string("X")}
     </button>
