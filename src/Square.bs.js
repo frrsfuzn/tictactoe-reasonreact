@@ -4,18 +4,14 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 
 function Square(Props) {
-  var match = React.useState(function () {
-        return "";
-      });
-  var setValue = match[1];
+  var value = Props.value;
+  var onClick = Props.onClick;
   return React.createElement("button", {
               className: "square",
               onClick: (function (param) {
-                  return Curry._1(setValue, (function (param) {
-                                return "X";
-                              }));
+                  return Curry._1(onClick, undefined);
                 })
-            }, match[0]);
+            }, value);
 }
 
 var make = Square;

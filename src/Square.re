@@ -1,9 +1,7 @@
 [@react.component]
 
-let make = (~value) => {
-    let (value, setValue) = React.useState(_ => "");
-
-    <button className="square" onClick={_ => setValue(_ => "X")}>
+let make = (~value, ~onClick) => {
+    <button className="square" onClick={_ => onClick()}>
         {ReasonReact.string(value)}
     </button>
 }
