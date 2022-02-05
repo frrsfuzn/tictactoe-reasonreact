@@ -36,7 +36,7 @@ function App(Props) {
                   })
               });
   };
-  return React.createElement(React.Fragment, undefined, React.createElement("div", {
+  return React.createElement(React.Fragment, undefined, React.createElement("p", undefined, "Next Player: " + player), React.createElement("div", {
                   className: "board-row"
                 }, renderSquare(0), renderSquare(1), renderSquare(2)), React.createElement("div", {
                   className: "board-row"

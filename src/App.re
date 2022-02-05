@@ -13,6 +13,7 @@ let make = () => {
     <Square value={squares[i]} onClick={() => handleClick(i)}  />
   };
   <>
+    <p>{ReasonReact.string("Next Player: " ++ player)}</p>
     <div className="board-row">
       {renderSquare(0)}
       {renderSquare(1)}
