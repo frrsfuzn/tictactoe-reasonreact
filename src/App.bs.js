@@ -81,6 +81,9 @@ function App(Props) {
     return React.createElement(Square$TictactoeReason.make, {
                 value: Caml_array.get(squares, i),
                 onClick: (function (param) {
+                    if (calculateWinner(squares) !== " ") {
+                      return ;
+                    }
                     var newSquares = $$Array.copy(squares);
                     Caml_array.set(newSquares, i, player);
                     Curry._1(setSquares, (function (param) {
