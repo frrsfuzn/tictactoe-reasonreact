@@ -3,9 +3,10 @@
 var React = require("react");
 
 function Square(Props) {
+  var value = Props.value;
   return React.createElement("button", {
               className: "square"
-            }, "X");
+            }, value);
 }
 
 var make = Square;
