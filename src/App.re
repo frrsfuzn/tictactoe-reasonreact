@@ -48,8 +48,18 @@ let make = () => {
   let nextPlayer = xIsNext ? "X" : "O";
   let status =
     winner == " " ? "Next Player: " ++ nextPlayer : "Winner: " ++ winner;
+
+  let moves = Array.mapi((i, e) => {
+    let desc = i === 0 ? "Go to game start" : "Go to move #" ++ string_of_int(i);
+    <li key={string_of_int(i)}>
+      <button>{ReasonReact.string(desc)}</button>
+    </li>
+  }, history);
   <>
     <p> {ReasonReact.string(status)} </p>
     <Board squares=current changeSquare=handleClick />
+    <ol>
+      {React.array(moves)}
+    </ol>
   </>;
 };

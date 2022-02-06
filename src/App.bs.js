@@ -95,10 +95,16 @@ function App(Props) {
   var winner = calculateWinner(current);
   var nextPlayer = xIsNext ? "X" : "O";
   var status = winner === " " ? "Next Player: " + nextPlayer : "Winner: " + winner;
+  var moves = $$Array.mapi((function (i, e) {
+          var desc = i === 0 ? "Go to game start" : "Go to move #" + String(i);
+          return React.createElement("li", {
+                      key: String(i)
+                    }, React.createElement("button", undefined, desc));
+        }), history);
   return React.createElement(React.Fragment, undefined, React.createElement("p", undefined, status), React.createElement(Board$TictactoeReason.make, {
                   squares: current,
                   changeSquare: handleClick
-                }));
+                }), React.createElement("ol", undefined, moves));
 }
 
 var make = App;
