@@ -5,18 +5,7 @@ var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
 var Board$TictactoeReason = require("./Board.bs.js");
-
-function squareValueString(value) {
-  switch (value) {
-    case /* Cross */0 :
-        return "X";
-    case /* Circle */1 :
-        return "O";
-    case /* Empty */2 :
-        return "";
-    
-  }
-}
+var SquareValue$TictactoeReason = require("./SquareValue.bs.js");
 
 function calculateWinner(squares) {
   var lines = [
@@ -113,7 +102,7 @@ function Game(Props) {
   var current = Caml_array.get(history, match$1[0]);
   var winner = calculateWinner(current);
   var nextPlayer = xIsNext ? "X" : "O";
-  var status = winner === /* Empty */2 ? "Next Player: " + nextPlayer : "Winner: " + squareValueString(winner);
+  var status = winner === /* Empty */2 ? "Next Player: " + nextPlayer : "Winner: " + SquareValue$TictactoeReason.squareValueString(winner);
   var moves = $$Array.mapi((function (i, param) {
           var desc = i === 0 ? "Go to game start" : "Go to move #" + String(i);
           return React.createElement("li", {
@@ -137,7 +126,6 @@ function Game(Props) {
 
 var make = Game;
 
-exports.squareValueString = squareValueString;
 exports.calculateWinner = calculateWinner;
 exports.make = make;
 /* react Not a pure module */

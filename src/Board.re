@@ -1,4 +1,3 @@
-open SquareValue;
 [@react.component]
 let make = (~squares, ~changeSquare) => {
 

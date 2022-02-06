@@ -1,13 +1,5 @@
 open SquareValue;
 
-let squareValueString = (value: squareValue): string => {
-  switch(value){
-    | Cross => "X"
-    | Circle => "O"
-    | Empty => ""
-  };
-};
-
 let calculateWinner = (squares) => {
   let lines = [|
     (0, 1, 2),
