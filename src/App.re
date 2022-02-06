@@ -31,7 +31,7 @@ let calculateWinner = squares => {
 [@react.component]
 let make = () => {
   let (history, setHistory) = React.useState(_ => [|Array.make(9, " ")|]);
-  // let (squares, setSquares) = React.useState(_ => Array.make(9, " "));
+  let (step, setStep) = React.useState(_ => 0);
   let (xIsNext, setXIsNext) = React.useState(_ => true);
   let handleClick = i => {
     let current = history[Array.length(history) - 1];
@@ -40,10 +40,16 @@ let make = () => {
       squares[i] = xIsNext ? "X" : "O";
       setHistory(prev => Array.append(prev, [|squares|]));
       setXIsNext(prev => !prev);
+      setStep(_ => Array.length(history))
     };
   };
 
-  let current = history[Array.length(history) - 1];
+  let jumpTo = (step) => {
+    setStep(_ => step);
+    setXIsNext(_ => step mod 2 === 0)
+  }
+
+  let current = history[step];
   let winner = calculateWinner(current);
   let nextPlayer = xIsNext ? "X" : "O";
   let status =
@@ -52,7 +58,7 @@ let make = () => {
   let moves = Array.mapi((i, e) => {
     let desc = i === 0 ? "Go to game start" : "Go to move #" ++ string_of_int(i);
     <li key={string_of_int(i)}>
-      <button>{ReasonReact.string(desc)}</button>
+      <button onClick={_ => jumpTo(i)}>{ReasonReact.string(desc)}</button>
     </li>
   }, history);
   <>
