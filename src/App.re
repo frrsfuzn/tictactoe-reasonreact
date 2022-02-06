@@ -30,38 +30,26 @@ let calculateWinner = squares => {
 
 [@react.component]
 let make = () => {
-  let (squares, setSquares) = React.useState(_ => Array.make(9, " "));
-  let (player, setPlayer) = React.useState(_ => "X");
-  let handleClick = i =>
+  let (history, setHistory) = React.useState(_ => [|Array.make(9, " ")|]);
+  // let (squares, setSquares) = React.useState(_ => Array.make(9, " "));
+  let (xIsNext, setXIsNext) = React.useState(_ => true);
+  let handleClick = i => {
+    let current = history[Array.length(history) - 1];
+    let squares = Array.copy(current);
     if (calculateWinner(squares) === " " && squares[i] === " ") {
-      let newSquares = Array.copy(squares);
-      newSquares[i] = player;
-      setSquares(_ => newSquares);
-      setPlayer(prev => prev === "X" ? "O" : "X");
+      squares[i] = xIsNext ? "X" : "O";
+      setHistory(prev => Array.append(prev, [|squares|]));
+      setXIsNext(prev => !prev);
     };
-
-  let renderSquare = i => {
-    <Square value={Array.get(squares, i)} onClick={() => handleClick(i)} />;
   };
-  let winner = calculateWinner(squares);
+
+  let current = history[Array.length(history) - 1];
+  let winner = calculateWinner(current);
+  let nextPlayer = xIsNext ? "X" : "O";
   let status =
-    winner == " " ? "Next Player: " ++ player : "Winner: " ++ winner;
+    winner == " " ? "Next Player: " ++ nextPlayer : "Winner: " ++ winner;
   <>
     <p> {ReasonReact.string(status)} </p>
-    <div className="board-row">
-      {renderSquare(0)}
-      {renderSquare(1)}
-      {renderSquare(2)}
-    </div>
-    <div className="board-row">
-      {renderSquare(3)}
-      {renderSquare(4)}
-      {renderSquare(5)}
-    </div>
-    <div className="board-row">
-      {renderSquare(6)}
-      {renderSquare(7)}
-      {renderSquare(8)}
-    </div>
+    <Board squares=current changeSquare=handleClick />
   </>;
 };

@@ -4,7 +4,7 @@ var $$Array = require("bs-platform/lib/js/array.js");
 var Curry = require("bs-platform/lib/js/curry.js");
 var React = require("react");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
-var Square$TictactoeReason = require("./Square.bs.js");
+var Board$TictactoeReason = require("./Board.bs.js");
 
 function calculateWinner(squares) {
   var lines = [
@@ -68,46 +68,37 @@ function calculateWinner(squares) {
 
 function App(Props) {
   var match = React.useState(function () {
-        return Caml_array.caml_make_vect(9, " ");
+        return [Caml_array.caml_make_vect(9, " ")];
       });
-  var setSquares = match[1];
-  var squares = match[0];
+  var setHistory = match[1];
+  var history = match[0];
   var match$1 = React.useState(function () {
-        return "X";
+        return true;
       });
-  var setPlayer = match$1[1];
-  var player = match$1[0];
-  var renderSquare = function (i) {
-    return React.createElement(Square$TictactoeReason.make, {
-                value: Caml_array.get(squares, i),
-                onClick: (function (param) {
-                    if (!(calculateWinner(squares) === " " && Caml_array.get(squares, i) === " ")) {
-                      return ;
-                    }
-                    var newSquares = $$Array.copy(squares);
-                    Caml_array.set(newSquares, i, player);
-                    Curry._1(setSquares, (function (param) {
-                            return newSquares;
-                          }));
-                    return Curry._1(setPlayer, (function (prev) {
-                                  if (prev === "X") {
-                                    return "O";
-                                  } else {
-                                    return "X";
-                                  }
-                                }));
-                  })
-              });
+  var setXIsNext = match$1[1];
+  var xIsNext = match$1[0];
+  var handleClick = function (i) {
+    var current = Caml_array.get(history, history.length - 1 | 0);
+    var squares = $$Array.copy(current);
+    if (calculateWinner(squares) === " " && Caml_array.get(squares, i) === " ") {
+      Caml_array.set(squares, i, xIsNext ? "X" : "O");
+      Curry._1(setHistory, (function (prev) {
+              return $$Array.append(prev, [squares]);
+            }));
+      return Curry._1(setXIsNext, (function (prev) {
+                    return !prev;
+                  }));
+    }
+    
   };
-  var winner = calculateWinner(squares);
-  var status = winner === " " ? "Next Player: " + player : "Winner: " + winner;
-  return React.createElement(React.Fragment, undefined, React.createElement("p", undefined, status), React.createElement("div", {
-                  className: "board-row"
-                }, renderSquare(0), renderSquare(1), renderSquare(2)), React.createElement("div", {
-                  className: "board-row"
-                }, renderSquare(3), renderSquare(4), renderSquare(5)), React.createElement("div", {
-                  className: "board-row"
-                }, renderSquare(6), renderSquare(7), renderSquare(8)));
+  var current = Caml_array.get(history, history.length - 1 | 0);
+  var winner = calculateWinner(current);
+  var nextPlayer = xIsNext ? "X" : "O";
+  var status = winner === " " ? "Next Player: " + nextPlayer : "Winner: " + winner;
+  return React.createElement(React.Fragment, undefined, React.createElement("p", undefined, status), React.createElement(Board$TictactoeReason.make, {
+                  squares: current,
+                  changeSquare: handleClick
+                }));
 }
 
 var make = App;
