@@ -6,6 +6,18 @@ var React = require("react");
 var Caml_array = require("bs-platform/lib/js/caml_array.js");
 var Board$TictactoeReason = require("./Board.bs.js");
 
+function squareValueString(value) {
+  switch (value) {
+    case /* Cross */0 :
+        return "X";
+    case /* Circle */1 :
+        return "O";
+    case /* Empty */2 :
+        return "";
+    
+  }
+}
+
 function calculateWinner(squares) {
   var lines = [
     [
@@ -51,24 +63,24 @@ function calculateWinner(squares) {
   ];
   var $$break = false;
   var index = 0;
-  var winner = " ";
+  var winner = /* Empty */2;
   while(!$$break && index < lines.length) {
     var match = Caml_array.get(lines, index);
     var a = match[0];
-    if (Caml_array.get(squares, a) !== " " && Caml_array.get(squares, a) === Caml_array.get(squares, match[1]) && Caml_array.get(squares, a) === Caml_array.get(squares, match[2])) {
+    if (Caml_array.get(squares, a) !== /* Empty */2 && Caml_array.get(squares, a) === Caml_array.get(squares, match[1]) && Caml_array.get(squares, a) === Caml_array.get(squares, match[2])) {
       winner = Caml_array.get(squares, a);
       $$break = true;
     } else {
-      winner = " ";
+      winner = /* Empty */2;
       index = index + 1 | 0;
     }
   };
   return winner;
 }
 
-function App(Props) {
+function Game(Props) {
   var match = React.useState(function () {
-        return [Caml_array.caml_make_vect(9, " ")];
+        return [Caml_array.caml_make_vect(9, /* Empty */2)];
       });
   var setHistory = match[1];
   var history = match[0];
@@ -84,8 +96,8 @@ function App(Props) {
   var handleClick = function (i) {
     var current = Caml_array.get(history, history.length - 1 | 0);
     var squares = $$Array.copy(current);
-    if (calculateWinner(squares) === " " && Caml_array.get(squares, i) === " ") {
-      Caml_array.set(squares, i, xIsNext ? "X" : "O");
+    if (calculateWinner(squares) === /* Empty */2 && Caml_array.get(squares, i) === /* Empty */2) {
+      Caml_array.set(squares, i, xIsNext ? /* Cross */0 : /* Circle */1);
       Curry._1(setHistory, (function (prev) {
               return $$Array.append(prev, [squares]);
             }));
@@ -101,8 +113,8 @@ function App(Props) {
   var current = Caml_array.get(history, match$1[0]);
   var winner = calculateWinner(current);
   var nextPlayer = xIsNext ? "X" : "O";
-  var status = winner === " " ? "Next Player: " + nextPlayer : "Winner: " + winner;
-  var moves = $$Array.mapi((function (i, e) {
+  var status = winner === /* Empty */2 ? "Next Player: " + nextPlayer : "Winner: " + squareValueString(winner);
+  var moves = $$Array.mapi((function (i, param) {
           var desc = i === 0 ? "Go to game start" : "Go to move #" + String(i);
           return React.createElement("li", {
                       key: String(i)
@@ -123,8 +135,9 @@ function App(Props) {
                 }), React.createElement("ol", undefined, moves));
 }
 
-var make = App;
+var make = Game;
 
+exports.squareValueString = squareValueString;
 exports.calculateWinner = calculateWinner;
 exports.make = make;
 /* react Not a pure module */

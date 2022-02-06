@@ -1,4 +1,14 @@
-let calculateWinner = squares => {
+open SquareValue;
+
+let squareValueString = (value: squareValue): string => {
+  switch(value){
+    | Cross => "X"
+    | Circle => "O"
+    | Empty => ""
+  };
+};
+
+let calculateWinner = (squares) => {
   let lines = [|
     (0, 1, 2),
     (3, 4, 5),
@@ -11,16 +21,16 @@ let calculateWinner = squares => {
   |];
   let break = ref(false);
   let index = ref(0);
-  let winner = ref(" ");
+  let winner = ref(Empty);
   while (! break^ && index^ < Array.length(lines)) {
     let (a, b, c) = lines[index^];
-    if (squares[a] !== " "
+    if (squares[a] !== Empty
         && squares[a] === squares[b]
         && squares[a] === squares[c]) {
       winner := squares[a];
       break := true;
     } else {
-      winner := " ";
+      winner := Empty;
       index := index^ + 1;
     };
   };
@@ -30,14 +40,14 @@ let calculateWinner = squares => {
 
 [@react.component]
 let make = () => {
-  let (history, setHistory) = React.useState(_ => [|Array.make(9, " ")|]);
+  let (history, setHistory) = React.useState(_ => [|Array.make(9, Empty)|]);
   let (step, setStep) = React.useState(_ => 0);
   let (xIsNext, setXIsNext) = React.useState(_ => true);
   let handleClick = i => {
     let current = history[Array.length(history) - 1];
     let squares = Array.copy(current);
-    if (calculateWinner(squares) === " " && squares[i] === " ") {
-      squares[i] = xIsNext ? "X" : "O";
+    if (calculateWinner(squares) === Empty && squares[i] === Empty) {
+      squares[i] = xIsNext ? Cross : Circle; 
       setHistory(prev => Array.append(prev, [|squares|]));
       setXIsNext(prev => !prev);
       setStep(_ => Array.length(history))
@@ -52,10 +62,10 @@ let make = () => {
   let current = history[step];
   let winner = calculateWinner(current);
   let nextPlayer = xIsNext ? "X" : "O";
-  let status =
-    winner == " " ? "Next Player: " ++ nextPlayer : "Winner: " ++ winner;
+  let status: string =
+    winner == Empty ? "Next Player: " ++ nextPlayer : "Winner: " ++ squareValueString(winner);
 
-  let moves = Array.mapi((i, e) => {
+  let moves = Array.mapi((i, _) => {
     let desc = i === 0 ? "Go to game start" : "Go to move #" ++ string_of_int(i);
     <li key={string_of_int(i)}>
       <button onClick={_ => jumpTo(i)}>{ReasonReact.string(desc)}</button>

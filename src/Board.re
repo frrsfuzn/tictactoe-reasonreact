@@ -1,8 +1,9 @@
+open SquareValue;
 [@react.component]
 let make = (~squares, ~changeSquare) => {
 
   let renderSquare = i => {
-    <Square value={Array.get(squares, i)} onClick={() => changeSquare(i)} />;
+    <Square value={squares[i]} onClick={() => changeSquare(i)} />;
   };
 
   <>
